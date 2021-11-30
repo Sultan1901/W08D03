@@ -4,7 +4,7 @@ const authorization = async (req, res, next) => {
   try {
     const roleId = req.token.role;
     const result = await roleModel.findById(roleId);
-    console.log(result);
+    
     if (result.role === "admin") {
       next();
     } else {
@@ -12,7 +12,7 @@ const authorization = async (req, res, next) => {
     }
   } catch (err) {
     res.status(403).json(err);
-    console.log(err);
+    
   }
 };
 

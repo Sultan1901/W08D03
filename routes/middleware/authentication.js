@@ -8,7 +8,7 @@ const authentication = (req, res, next) => {
       return res.status(403).json({ message: "forbidden" });
     const token = req.headers.authorization.split(" ")[1];
     const parsedToken = jwt.verify(token, secret);
-    console.log(parsedToken);
+    
 
     req.token = parsedToken;
 

@@ -3,7 +3,6 @@ const createTask = (req, res) => {
   const { name } = req.body;
   const newTask = new taskModel({
     name,
-    
   });
   newTask
     .save()
@@ -42,4 +41,19 @@ const getTaskById = (req, res) => {
     });
 };
 
-module.exports = { createTask, getTask, getTaskById };
+const deleteTask = (req, res) => {
+  const { id } = req.params;
+
+  taskModel
+    .findByIdAndRemove(id)
+    .exec()
+    .then((result) => {
+      console.log(result);
+      res.status(200).json(result);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+};
+
+module.exports = { createTask, getTask, getTaskById, deleteTask };
