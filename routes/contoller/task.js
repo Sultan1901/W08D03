@@ -45,15 +45,30 @@ const deleteTask = (req, res) => {
   const { id } = req.params;
 
   taskModel
-    .findByIdAndRemove(id)
+    .findByIdAndUpdate(id, { $set: { isdel: true } })
     .exec()
     .then((result) => {
-      console.log(result);
-      res.status(200).json(result);
+      res.status(200).json("Deleted");
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+};
+const updateTask = (req, res) => {
+  const { name } = req.body;
+  const { id } = req.params;
+  taskModel
+    .findByIdAndUpdate(id, { $set: { name: name } })
+    .then((result) => {
+      if (result) {
+        res.status(200).json("updated");
+      } else {
+        res.status(404).json(err);
+      }
     })
     .catch((err) => {
       res.status(400).json(err);
     });
 };
 
-module.exports = { createTask, getTask, getTaskById, deleteTask };
+module.exports = { createTask, getTask, getTaskById, deleteTask, updateTask };
