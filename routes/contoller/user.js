@@ -35,14 +35,15 @@ const login = (req, res) => {
           const options = {
             expiresIn: 3600,
           };
-
+ const token = await jwt.sign(payload, SECKEY, options);
+ console.log(token);
           const crackedhashpwd = await bcrypt.compare(
             password,
             result.password
           );
 
           if (crackedhashpwd) {
-            res.status(200).json(result);
+            res.status(200).json(result.token);
           } else {
             res.status(400).json("wrong email || password");
           }
