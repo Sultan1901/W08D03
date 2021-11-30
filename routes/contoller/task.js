@@ -15,7 +15,6 @@ const createTask = (req, res) => {
     });
 };
 
-// Get Role of users
 const getTask = (req, res) => {
   taskModel
     .find({})
@@ -26,4 +25,6 @@ const getTask = (req, res) => {
       res.status(400).json(err);
     });
 };
+
+
 module.exports = { createTask, getTask };

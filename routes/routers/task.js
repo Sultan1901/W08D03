@@ -4,6 +4,7 @@ const authentication = require("../contoller/../middleware/authentication")
 const authorization = require("../contoller/../middleware/authorization");
 
 const taskRouter = express.Router();
-taskRouter.post("/createtask", authorization, createTask);
-taskRouter.get("/gettask", getTask);
+taskRouter.post("/createtask", authentication,createTask);
+taskRouter.get("/gettask", authentication,authorization, getTask);
 module.exports = taskRouter ;
+

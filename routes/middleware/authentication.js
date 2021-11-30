@@ -1,21 +1,20 @@
-const jwt = require('jsonwebtoken')
-require('dotenv').config()
-const secret = process.env.SECKEY
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+const secret = process.env.SECKEY;
 
-const authentication = (req , res)=>{
+const authentication = (req, res, next) => {
+  try {
+    if (!req.headers.authorization)
+      return res.status(403).json({ message: "forbidden" });
+    const token = req.headers.authorization.split(" ")[1];
+    const parsedToken = jwt.verify(token, secret);
+    console.log(parsedToken);
 
-    try {
-        if (!req.headers.authorization)
-        return res.status(403).json({message : 'forbidden'})
-        const token = req.headers.authorization.split(" ")[1]
-        const parsedToken = jwt .verify(token , secret)
-        req.sultan = parsedToken
-        
-        next()
-    } catch (error) {
-        res.status(403).json(error)
+    req.token = parsedToken;
 
-        
-    }
-}
-module.exports = authentication
+    next();
+  } catch (error) {
+    res.status(403).json(error);
+  }
+};
+module.exports = authentication;

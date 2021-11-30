@@ -1,5 +1,4 @@
 const roleModel = require("../../db/models/role");
-// Create Role of new users
 const create = (req, res) => {
   const { role, permission } = req.body;
   const newRole = new roleModel({
@@ -16,7 +15,6 @@ const create = (req, res) => {
     });
 };
 
-// Get Role of users
 const getRole = (req,res)=>{
   roleModel
   .find({})
