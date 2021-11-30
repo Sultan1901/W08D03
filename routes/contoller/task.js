@@ -26,5 +26,20 @@ const getTask = (req, res) => {
     });
 };
 
+const getTaskById = (req, res) => {
+  const { id } = req.params;
+  taskModel
+    .find({ _id: id, user: req.token.id })
+    .then((result) => {
+      if (result) {
+        res.status(200).json(result);
+      } else {
+        res.status(404).json("task does not exist");
+      }
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+};
 
-module.exports = { createTask, getTask };
+module.exports = { createTask, getTask, getTaskById };
