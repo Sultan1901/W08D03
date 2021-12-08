@@ -1,4 +1,4 @@
-# Backednd project 
+# Backend project 
 ### create express server via nodeJS with remot mongo DATABASE , 
 ### package used in this program ==> express ,cors , mongoose , morgan ,dotenv 
 #
