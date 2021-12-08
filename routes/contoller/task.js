@@ -3,6 +3,7 @@ const createTask = (req, res) => {
   const { name } = req.body;
   const newTask = new taskModel({
     name,
+    userId:req.token.id
   });
   newTask
     .save()
@@ -16,7 +17,7 @@ const createTask = (req, res) => {
 
 const getTask = (req, res) => {
   taskModel
-    .find({})
+    .find({userId:req.token.id,isDel:false})
     .then((result) => {
       res.status(200).json(result);
     })
@@ -45,7 +46,20 @@ const deleteTask = (req, res) => {
   const { id } = req.params;
 
   taskModel
-    .findByIdAndUpdate(id, { $set: { isdel: true } })
+    .findByIdAndRemove(id)
+    .exec()
+    .then((result) => {
+      res.status(200).json("Deleted");
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+};
+const adminDelete = (req, res) => {
+  const { id } = req.params;
+
+  taskModel
+    .findByIdAndRemove(id)
     .exec()
     .then((result) => {
       res.status(200).json("Deleted");
@@ -71,4 +85,11 @@ const updateTask = (req, res) => {
     });
 };
 
-module.exports = { createTask, getTask, getTaskById, deleteTask, updateTask };
+module.exports = {
+  createTask,
+  getTask,
+  getTaskById,
+  deleteTask,
+  updateTask,
+  adminDelete,
+};
