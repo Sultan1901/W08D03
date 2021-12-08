@@ -8,3 +8,4 @@
 # 
 #### check ER Diagram below "_^
 ![ER Diagram](./backend.png)
+![ER Diagram](./Schema.png)
